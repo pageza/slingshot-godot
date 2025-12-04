@@ -41,22 +41,21 @@ func _ready() -> void:
 	# Create visual and collision
 	create_block_visual()
 
-	# Start blocks as sleeping to prevent initial drop
-	sleeping = true
+	# Freeze blocks completely during initialization to prevent any movement
+	freeze = true
 
-	# Wake up after scene is fully loaded
+	# Unfreeze after scene is fully loaded
 	call_deferred("complete_initialization")
 
 	print("Block created with health: ", max_health)
 
 func complete_initialization() -> void:
 	"""Complete initialization after scene is loaded"""
-	# Wait one frame for physics to settle
-	await get_tree().physics_frame
-	await get_tree().physics_frame
+	# Wait for physics to fully settle
+	await get_tree().create_timer(0.5).timeout
 
 	# Now enable physics
-	sleeping = false
+	freeze = false
 	initialization_complete = true
 
 func create_block_visual() -> void:
