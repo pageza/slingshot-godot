@@ -23,6 +23,7 @@ class_name Block
 # === STATE VARIABLES ===
 var current_health: float
 var is_destroyed: bool = false
+var initialization_complete: bool = false
 
 func _ready() -> void:
 	current_health = max_health
@@ -40,7 +41,23 @@ func _ready() -> void:
 	# Create visual and collision
 	create_block_visual()
 
+	# Start blocks as sleeping to prevent initial drop
+	sleeping = true
+
+	# Wake up after scene is fully loaded
+	call_deferred("complete_initialization")
+
 	print("Block created with health: ", max_health)
+
+func complete_initialization() -> void:
+	"""Complete initialization after scene is loaded"""
+	# Wait one frame for physics to settle
+	await get_tree().physics_frame
+	await get_tree().physics_frame
+
+	# Now enable physics
+	sleeping = false
+	initialization_complete = true
 
 func create_block_visual() -> void:
 	"""Create visual representation and collision shape"""
@@ -75,6 +92,10 @@ func create_block_visual() -> void:
 	add_child(border)
 
 func _physics_process(_delta: float) -> void:
+	# Only check velocity destruction after initialization is complete
+	if not initialization_complete:
+		return
+
 	# Check for high-velocity destruction
 	if break_on_high_velocity and linear_velocity.length() > break_velocity_threshold:
 		print("Block destroyed by high velocity: ", linear_velocity.length())

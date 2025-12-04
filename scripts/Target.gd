@@ -44,7 +44,22 @@ func _ready() -> void:
 	# Create visual and collision
 	create_target_visual()
 
+	# Start targets as sleeping to prevent initial drop
+	sleeping = true
+
+	# Wake up after scene is fully loaded
+	call_deferred("complete_initialization")
+
 	print("Target created with health: ", max_health)
+
+func complete_initialization() -> void:
+	"""Complete initialization after scene is loaded"""
+	# Wait for physics to settle
+	await get_tree().physics_frame
+	await get_tree().physics_frame
+
+	# Now enable physics
+	sleeping = false
 
 func create_target_visual() -> void:
 	"""Create visual representation and collision shape"""
