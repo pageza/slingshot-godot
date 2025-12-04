@@ -7,7 +7,7 @@ class_name Slingshot
 # === TUNABLE PARAMETERS ===
 @export_group("Launch Settings")
 @export var max_drag_distance: float = 200.0  ## Maximum pixels player can drag back
-@export var force_multiplier: float = 15.0    ## Converts drag distance to launch force
+@export var force_multiplier: float = 10.0    ## Converts drag distance to launch force
 @export var min_launch_force: float = 50.0    ## Minimum force required to launch
 
 @export_group("Projectile Settings")
@@ -104,7 +104,7 @@ func update_visual_feedback() -> void:
 		draw_trajectory_preview()
 
 func draw_trajectory_preview() -> void:
-	"""Calculate and draw predicted trajectory arc"""
+	"""Calculate and draw predicted trajectory arc with damping"""
 	trajectory_line.clear_points()
 
 	var launch_velocity: Vector2 = calculate_launch_velocity()
@@ -113,12 +113,24 @@ func draw_trajectory_preview() -> void:
 
 	var start_pos: Vector2 = drag_start_pos + projectile_spawn_offset
 	var gravity: Vector2 = Vector2(0, ProjectSettings.get_setting("physics/2d/default_gravity"))
+	var linear_damping: float = 0.1  # Default physics linear damping
 
-	# Simulate projectile path
+	# Simulate projectile path with damping
+	var current_velocity: Vector2 = launch_velocity
+	var current_pos: Vector2 = start_pos
+
 	for i in range(trajectory_points):
-		var time: float = i * trajectory_time_step
-		var pos: Vector2 = start_pos + launch_velocity * time + 0.5 * gravity * time * time
-		trajectory_line.add_point(to_local(pos))
+		trajectory_line.add_point(to_local(current_pos))
+
+		# Apply gravity
+		current_velocity += gravity * trajectory_time_step
+
+		# Apply linear damping (air resistance)
+		var damping_factor = 1.0 / (1.0 + linear_damping * trajectory_time_step)
+		current_velocity *= damping_factor
+
+		# Update position
+		current_pos += current_velocity * trajectory_time_step
 
 func calculate_launch_velocity() -> Vector2:
 	"""Convert drag vector into launch velocity"""
