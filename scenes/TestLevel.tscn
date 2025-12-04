@@ -1,0 +1,106 @@
+[gd_scene load_steps=7 format=3 uid="uid://bw7j8x5k2ynrf"]
+
+[ext_resource type="Script" path="res://scripts/Slingshot.gd" id="1_slingshot"]
+[ext_resource type="PackedScene" uid="uid://c8qkv3r0ybh4j" path="res://scenes/Projectile.tscn" id="2_projectile"]
+[ext_resource type="Script" path="res://scripts/Block.gd" id="3_block"]
+[ext_resource type="Script" path="res://scripts/Target.gd" id="4_target"]
+[ext_resource type="Script" path="res://scripts/GameManager.gd" id="5_gamemanager"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ground"]
+size = Vector2(2000, 100)
+
+[node name="TestLevel" type="Node2D"]
+
+[node name="GameManager" type="Node" parent="."]
+script = ExtResource("5_gamemanager")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(540, 700)
+zoom = Vector2(0.8, 0.8)
+
+[node name="Ground" type="StaticBody2D" parent="."]
+position = Vector2(540, 1850)
+collision_layer = 4
+collision_mask = 0
+
+[node name="GroundShape" type="CollisionShape2D" parent="Ground"]
+shape = SubResource("RectangleShape2D_ground")
+
+[node name="GroundVisual" type="Polygon2D" parent="Ground"]
+color = Color(0.4, 0.3, 0.2, 1)
+polygon = PackedVector2Array(-1000, -50, 1000, -50, 1000, 50, -1000, 50)
+
+[node name="Slingshot" type="Node2D" parent="."]
+position = Vector2(200, 1600)
+script = ExtResource("1_slingshot")
+projectile_scene = ExtResource("2_projectile")
+
+[node name="BlockStructure" type="Node2D" parent="."]
+position = Vector2(800, 1600)
+
+[node name="Block1" type="RigidBody2D" parent="BlockStructure"]
+position = Vector2(-60, 0)
+script = ExtResource("3_block")
+block_color = Color(0.824, 0.706, 0.549, 1)
+
+[node name="Block2" type="RigidBody2D" parent="BlockStructure"]
+position = Vector2(60, 0)
+script = ExtResource("3_block")
+block_color = Color(0.824, 0.706, 0.549, 1)
+
+[node name="Block3" type="RigidBody2D" parent="BlockStructure"]
+position = Vector2(-60, -60)
+script = ExtResource("3_block")
+block_color = Color(0.8, 0.6, 0.4, 1)
+
+[node name="Block4" type="RigidBody2D" parent="BlockStructure"]
+position = Vector2(60, -60)
+script = ExtResource("3_block")
+block_color = Color(0.8, 0.6, 0.4, 1)
+
+[node name="Block5" type="RigidBody2D" parent="BlockStructure"]
+position = Vector2(0, -120)
+script = ExtResource("3_block")
+block_color = Color(0.7, 0.5, 0.3, 1)
+
+[node name="Target1" type="RigidBody2D" parent="BlockStructure"]
+position = Vector2(0, -190)
+script = ExtResource("4_target")
+
+[node name="BlockStructure2" type="Node2D" parent="."]
+position = Vector2(950, 1700)
+
+[node name="Block6" type="RigidBody2D" parent="BlockStructure2"]
+position = Vector2(0, 0)
+script = ExtResource("3_block")
+block_size = Vector2(40, 80)
+block_color = Color(0.6, 0.5, 0.4, 1)
+
+[node name="Block7" type="RigidBody2D" parent="BlockStructure2"]
+position = Vector2(0, -90)
+script = ExtResource("3_block")
+block_size = Vector2(40, 80)
+block_color = Color(0.6, 0.5, 0.4, 1)
+
+[node name="Target2" type="RigidBody2D" parent="BlockStructure2"]
+position = Vector2(0, -180)
+script = ExtResource("4_target")
+target_size = Vector2(35, 50)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="InfoLabel" type="Label" parent="UI"]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 500.0
+offset_bottom = 150.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 24
+text = "SLINGSHOT PHYSICS POC
+Click near slingshot and drag to aim
+Release to launch
+
+Destroy all RED targets to win!"
