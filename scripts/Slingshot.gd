@@ -23,12 +23,19 @@ class_name Slingshot
 var is_dragging: bool = false
 var drag_start_pos: Vector2 = Vector2.ZERO
 var current_drag_pos: Vector2 = Vector2.ZERO
+var game_manager: Node = null
+
+# === SIGNALS ===
+signal projectile_launched()
 
 # === VISUAL NODES ===
 var drag_line: Line2D
 var trajectory_line: Line2D
 
 func _ready() -> void:
+	# Find GameManager
+	game_manager = get_tree().root.find_child("GameManager", true, false)
+
 	# Create drag direction line
 	drag_line = Line2D.new()
 	drag_line.width = 3.0
@@ -58,6 +65,12 @@ func _process(_delta: float) -> void:
 
 func start_drag() -> void:
 	"""Begin dragging from slingshot position"""
+	# Check if shooting is allowed
+	if game_manager and game_manager.has_method("can_shoot"):
+		if not game_manager.can_shoot():
+			print("Cannot shoot - out of shots or game over!")
+			return
+
 	var mouse_pos: Vector2 = get_global_mouse_position()
 
 	# Only start drag if clicking near the slingshot
@@ -138,6 +151,9 @@ func launch_projectile() -> void:
 	print("Projectile launched with velocity: ", launch_velocity, " (magnitude: ", launch_velocity.length(), ")")
 	if has_node("/root/Logger"):
 		get_node("/root/Logger").call("log_projectile_launch", launch_velocity, projectile.global_position)
+
+	# Emit signal to notify GameManager
+	projectile_launched.emit()
 
 func end_drag() -> void:
 	"""End drag state and clear visual feedback"""
