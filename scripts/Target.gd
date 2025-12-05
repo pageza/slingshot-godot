@@ -62,9 +62,11 @@ func _on_body_entered(body: Node) -> void:
 		var relative_velocity: Vector2 = linear_velocity - body.linear_velocity
 		var impact_force: float = relative_velocity.length() * mass
 
-		# Apply damage based on impact force
-		var impact_damage: float = impact_force / 100.0  # Scale factor for damage
-		if impact_damage > damage_threshold:
+		# Apply damage based on impact force (any impact causes damage)
+		var impact_damage: float = impact_force / 50.0  # Increased sensitivity
+
+		# Only apply damage if impact is significant (avoid tiny bumps)
+		if impact_damage > 1.0:
 			take_damage(impact_damage)
 
 func enable_gravity() -> void:

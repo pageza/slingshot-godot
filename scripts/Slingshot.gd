@@ -12,7 +12,7 @@ class_name Slingshot
 
 @export_group("Projectile Settings")
 @export var projectile_scene: PackedScene      ## Projectile scene to spawn
-@export var projectile_spawn_offset: Vector2 = Vector2(0, -100)  ## Offset from slingshot position (at fork junction)
+@export var projectile_spawn_offset: Vector2 = Vector2(0, -80)  ## Offset from slingshot position (at fork junction)
 
 @export_group("Visual Feedback")
 @export var show_trajectory: bool = true       ## Show trajectory preview
@@ -73,12 +73,13 @@ func start_drag() -> void:
 
 	var mouse_pos: Vector2 = get_global_mouse_position()
 
-	# Only start drag if clicking near the slingshot
-	if global_position.distance_to(mouse_pos) < 100.0:
+	# Only start drag if clicking near the slingshot fork
+	var fork_pos: Vector2 = global_position + projectile_spawn_offset
+	if fork_pos.distance_to(mouse_pos) < 100.0:
 		is_dragging = true
-		drag_start_pos = global_position
+		drag_start_pos = fork_pos  # Start drag from fork position
 		current_drag_pos = mouse_pos
-		print("Drag started at: ", drag_start_pos)
+		print("Drag started at fork: ", drag_start_pos)
 		if has_node("/root/Logger"):
 			get_node("/root/Logger").call("log_info", "Drag started", "Slingshot")
 
