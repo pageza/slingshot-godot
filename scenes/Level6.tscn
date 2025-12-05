@@ -32,12 +32,12 @@ color = Color(0.4, 0.3, 0.2, 1)
 polygon = PackedVector2Array(-1000, -50, 1000, -50, 1000, 50, -1000, 50)
 
 [node name="Slingshot" type="Node2D" parent="."]
-position = Vector2(300, 850)
+position = Vector2(300, 925)
 script = ExtResource("1_slingshot")
 projectile_scene = ExtResource("2_projectile")
 
 [node name="BlockStructure1" type="Node2D" parent="."]
-position = Vector2(1050, 850)
+position = Vector2(1050, 925)
 
 [node name="Block1" type="RigidBody2D" parent="BlockStructure1"]
 position = Vector2(-20, 0)
@@ -59,7 +59,7 @@ position = Vector2(0, -105)
 script = ExtResource("4_target")
 
 [node name="BlockStructure2" type="Node2D" parent="."]
-position = Vector2(1350, 850)
+position = Vector2(1350, 925)
 
 [node name="Block4" type="RigidBody2D" parent="BlockStructure2"]
 position = Vector2(-60, 0)
