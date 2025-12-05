@@ -95,10 +95,8 @@ func update_drag() -> void:
 
 func update_visual_feedback() -> void:
 	"""Update visual indicators during drag"""
-	# Update drag line (shows pull direction)
-	drag_line.clear_points()
-	drag_line.add_point(to_local(drag_start_pos))
-	drag_line.add_point(to_local(current_drag_pos))
+	# Redraw slingshot to update rubber bands
+	queue_redraw()
 
 	# Update trajectory preview
 	if show_trajectory:
@@ -112,7 +110,8 @@ func draw_trajectory_preview() -> void:
 	if launch_velocity.length() < min_launch_force:
 		return
 
-	var start_pos: Vector2 = drag_start_pos + projectile_spawn_offset
+	# Start trajectory from current projectile position (where dragged to)
+	var start_pos: Vector2 = current_drag_pos
 	var gravity: Vector2 = Vector2(0, ProjectSettings.get_setting("physics/2d/default_gravity"))
 	var linear_damping: float = 0.1  # Default physics linear damping
 
@@ -153,10 +152,10 @@ func launch_projectile() -> void:
 		print("Launch force too weak: ", launch_velocity.length())
 		return
 
-	# Spawn projectile
+	# Spawn projectile at current drag position (where it was pulled to)
 	var projectile: RigidBody2D = projectile_scene.instantiate()
 	get_tree().root.add_child(projectile)
-	projectile.global_position = global_position + projectile_spawn_offset
+	projectile.global_position = current_drag_pos
 
 	# Add to projectiles group for cleanup
 	projectile.add_to_group("projectiles")
@@ -174,8 +173,8 @@ func launch_projectile() -> void:
 func end_drag() -> void:
 	"""End drag state and clear visual feedback"""
 	is_dragging = false
-	drag_line.clear_points()
 	trajectory_line.clear_points()
+	queue_redraw()  # Redraw to show projectile back in fork
 	print("Drag ended")
 
 func _draw() -> void:
@@ -193,3 +192,13 @@ func _draw() -> void:
 	# Draw connection points at top of forks
 	draw_circle(Vector2(-20, -120), 5.0, Color.DARK_ORANGE)
 	draw_circle(Vector2(20, -120), 5.0, Color.DARK_ORANGE)
+
+	# Draw rubber bands when dragging (from fork tips to projectile)
+	if is_dragging:
+		var projectile_pos: Vector2 = to_local(current_drag_pos)
+		draw_line(Vector2(-20, -120), projectile_pos, Color(0.4, 0.3, 0.2, 0.8), 3.0)
+		draw_line(Vector2(20, -120), projectile_pos, Color(0.4, 0.3, 0.2, 0.8), 3.0)
+
+	# Draw projectile sitting in fork (unless being dragged)
+	if not is_dragging:
+		draw_circle(projectile_spawn_offset, 10.0, Color.DARK_SLATE_GRAY)
