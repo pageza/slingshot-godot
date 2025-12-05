@@ -157,6 +157,9 @@ func launch_projectile() -> void:
 	get_tree().root.add_child(projectile)
 	projectile.global_position = global_position + projectile_spawn_offset
 
+	# Add to projectiles group for cleanup
+	projectile.add_to_group("projectiles")
+
 	# Apply launch force
 	projectile.linear_velocity = launch_velocity
 

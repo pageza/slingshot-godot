@@ -87,8 +87,8 @@ func check_defeat() -> void:
 	if game_over:
 		return
 
-	# Wait a bit for any projectiles to finish their physics
-	await get_tree().create_timer(2.0).timeout
+	# Wait longer for projectiles to hit, cause destruction, and physics to settle
+	await get_tree().create_timer(5.0).timeout
 
 	if destroyed_targets < total_targets and shots_remaining <= 0 and not game_over:
 		game_lost = true
@@ -116,4 +116,9 @@ func restart_level() -> void:
 	"""Restart the current level"""
 	if has_node("/root/Logger"):
 		get_node("/root/Logger").call("log_level_event", "Level restarting")
+
+	# Clean up all projectiles before reloading
+	for projectile in get_tree().get_nodes_in_group("projectiles"):
+		projectile.queue_free()
+
 	get_tree().reload_current_scene()

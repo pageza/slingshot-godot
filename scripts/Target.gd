@@ -54,8 +54,8 @@ func _ready() -> void:
 
 func enable_gravity() -> void:
 	"""Enable gravity after all targets are positioned"""
-	# Wait for all objects to spawn and be positioned
-	await get_tree().create_timer(0.1).timeout
+	# Wait longer for all objects to spawn and be positioned
+	await get_tree().create_timer(0.5).timeout
 
 	# Now turn on gravity
 	gravity_scale = 1.0
