@@ -12,7 +12,7 @@ class_name Slingshot
 
 @export_group("Projectile Settings")
 @export var projectile_scene: PackedScene      ## Projectile scene to spawn
-@export var projectile_spawn_offset: Vector2 = Vector2(0, -20)  ## Offset from slingshot position
+@export var projectile_spawn_offset: Vector2 = Vector2(0, -100)  ## Offset from slingshot position (at fork junction)
 
 @export_group("Visual Feedback")
 @export var show_trajectory: bool = true       ## Show trajectory preview
@@ -175,10 +175,17 @@ func end_drag() -> void:
 	print("Drag ended")
 
 func _draw() -> void:
-	"""Draw slingshot visual (simple Y-shape)"""
-	# Draw slingshot posts
-	draw_line(Vector2(-20, 0), Vector2(-20, -40), Color.SADDLE_BROWN, 6.0)
-	draw_line(Vector2(20, 0), Vector2(20, -40), Color.SADDLE_BROWN, 6.0)
+	"""Draw slingshot visual (Y-shape on a stick)"""
+	# Draw base on ground
+	draw_circle(Vector2.ZERO, 10.0, Color.SADDLE_BROWN)
 
-	# Draw base
-	draw_circle(Vector2.ZERO, 10.0, Color.DARK_ORANGE)
+	# Draw vertical post/stick from ground up
+	draw_line(Vector2(0, 0), Vector2(0, -80), Color.SADDLE_BROWN, 8.0)
+
+	# Draw forked Y arms at top of stick
+	draw_line(Vector2(0, -80), Vector2(-20, -120), Color.SADDLE_BROWN, 6.0)
+	draw_line(Vector2(0, -80), Vector2(20, -120), Color.SADDLE_BROWN, 6.0)
+
+	# Draw connection points at top of forks
+	draw_circle(Vector2(-20, -120), 5.0, Color.DARK_ORANGE)
+	draw_circle(Vector2(20, -120), 5.0, Color.DARK_ORANGE)
