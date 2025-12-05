@@ -12,7 +12,7 @@ This is exactly the kind of structured doc Claude will follow cleanly.
 Create a 2D slingshot-based physics game inspired by Angry Birds mechanics but using **original code and assets**.
 Gameplay loop: drag to aim → release projectile → destroy target structures → clear objectives → proceed to next level.
 
-Project must be built using **Godot 4.6**, with **minimal manual editor work**. Claude should generate:
+Project must be built using **Godot 4.5.1**, with **minimal manual editor work**. Claude should generate:
 
 * `.tscn` scene files
 * `.gd` scripts
@@ -34,7 +34,7 @@ Claude is allowed to reference patterns from these templates:
 
 ### **Primary Template (Base Architecture)**
 
-* **Basic 2D Platformer Starter Template (Godot 4.6)**
+* **Basic 2D Platformer Starter Template (Godot 4.5.1)**
   Used for:
 
   * node structure patterns
@@ -229,7 +229,7 @@ Claude will generate:
 
 ## **Script Conventions**
 
-* Godot 4.6
+* Godot 4.5.1
 * GDScript only
 * Signals used for UI + events
 * Use clean, self-contained scripts
