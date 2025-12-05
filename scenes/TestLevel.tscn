@@ -40,22 +40,22 @@ projectile_scene = ExtResource("2_projectile")
 position = Vector2(1200, 850)
 
 [node name="Block1" type="RigidBody2D" parent="BlockStructure"]
-position = Vector2(-60, 0)
+position = Vector2(-20, 0)
 script = ExtResource("3_block")
 block_color = Color(0.824, 0.706, 0.549, 1)
 
 [node name="Block2" type="RigidBody2D" parent="BlockStructure"]
-position = Vector2(60, 0)
+position = Vector2(20, 0)
 script = ExtResource("3_block")
 block_color = Color(0.824, 0.706, 0.549, 1)
 
 [node name="Block3" type="RigidBody2D" parent="BlockStructure"]
-position = Vector2(-60, -50)
+position = Vector2(-20, -50)
 script = ExtResource("3_block")
 block_color = Color(0.8, 0.6, 0.4, 1)
 
 [node name="Block4" type="RigidBody2D" parent="BlockStructure"]
-position = Vector2(60, -50)
+position = Vector2(20, -50)
 script = ExtResource("3_block")
 block_color = Color(0.8, 0.6, 0.4, 1)
 
