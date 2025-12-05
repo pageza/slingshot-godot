@@ -41,36 +41,21 @@ func _ready() -> void:
 	# Create visual and collision
 	create_block_visual()
 
-	# Completely disable physics during initialization
-	freeze = true
-	freeze_mode = FREEZE_MODE_STATIC
-	gravity_scale = 0  # No gravity during init
-	sleeping = true
+	# Start with NO GRAVITY - blocks placed in position first
+	gravity_scale = 0.0
 
-	# Unfreeze after scene is fully loaded
-	call_deferred("complete_initialization")
+	# Turn on gravity after scene is fully loaded
+	call_deferred("enable_gravity")
 
 	print("Block created with health: ", max_health)
 
-func complete_initialization() -> void:
-	"""Complete initialization after scene is loaded"""
-	# Wait multiple physics frames for ALL blocks to spawn
-	for i in range(10):
-		await get_tree().physics_frame
+func enable_gravity() -> void:
+	"""Enable gravity after all blocks are positioned"""
+	# Wait for all objects to spawn and be positioned
+	await get_tree().create_timer(0.1).timeout
 
-	# Additional small delay to ensure stability
-	await get_tree().create_timer(0.5).timeout
-
-	# Re-enable physics gradually
+	# Now turn on gravity
 	gravity_scale = 1.0
-	sleeping = false
-	freeze_mode = FREEZE_MODE_KINEMATIC
-
-	# Small delay before fully enabling
-	await get_tree().physics_frame
-	await get_tree().physics_frame
-
-	freeze = false
 	initialization_complete = true
 
 func create_block_visual() -> void:
