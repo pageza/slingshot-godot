@@ -76,6 +76,10 @@ func _on_restart_pressed() -> void:
 
 func _on_next_level_pressed() -> void:
 	"""Handle next level button press"""
+	# Clean up all projectiles before changing scenes
+	for projectile in get_tree().get_nodes_in_group("projectiles"):
+		projectile.queue_free()
+
 	# Get current scene name and extract level number
 	var current_scene: String = get_tree().current_scene.scene_file_path
 	var level_num: int = get_level_number(current_scene)

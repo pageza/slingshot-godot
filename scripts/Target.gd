@@ -44,10 +44,28 @@ func _ready() -> void:
 	# Create visual and collision
 	create_target_visual()
 
+	# Connect collision signals for impact damage
+	body_entered.connect(_on_body_entered)
+
 	# Start with NO GRAVITY - stays off until first shot
 	gravity_scale = 0.0
 
 	print("Target created with health: ", max_health)
+
+func _on_body_entered(body: Node) -> void:
+	"""Handle collision with other bodies for impact damage"""
+	if is_destroyed:
+		return
+
+	# Calculate impact force based on relative velocity
+	if body is RigidBody2D:
+		var relative_velocity: Vector2 = linear_velocity - body.linear_velocity
+		var impact_force: float = relative_velocity.length() * mass
+
+		# Apply damage based on impact force
+		var impact_damage: float = impact_force / 100.0  # Scale factor for damage
+		if impact_damage > damage_threshold:
+			take_damage(impact_damage)
 
 func enable_gravity() -> void:
 	"""Enable gravity when first shot is fired"""
