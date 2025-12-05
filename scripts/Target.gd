@@ -55,6 +55,13 @@ func enable_gravity() -> void:
 	# Set to sleeping so targets don't move until hit
 	sleeping = true
 
+func _physics_process(_delta: float) -> void:
+	# Check if fallen off screen (kill plane) - count as destroyed for win condition
+	if global_position.y > 1200:
+		print("Target fell off screen, counting as destroyed")
+		if not is_destroyed:
+			destroy()
+
 func create_target_visual() -> void:
 	"""Create visual representation and collision shape"""
 	# Create collision shape

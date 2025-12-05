@@ -93,6 +93,12 @@ func _physics_process(_delta: float) -> void:
 	if not initialization_complete:
 		return
 
+	# Check if fallen off screen (kill plane)
+	if global_position.y > 1200:
+		print("Block fell off screen, removing")
+		queue_free()
+		return
+
 	# Check for high-velocity destruction
 	if break_on_high_velocity and linear_velocity.length() > break_velocity_threshold:
 		print("Block destroyed by high velocity: ", linear_velocity.length())
