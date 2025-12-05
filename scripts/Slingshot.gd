@@ -199,6 +199,10 @@ func _draw() -> void:
 		draw_line(Vector2(-20, -120), projectile_pos, Color(0.4, 0.3, 0.2, 0.8), 3.0)
 		draw_line(Vector2(20, -120), projectile_pos, Color(0.4, 0.3, 0.2, 0.8), 3.0)
 
+		# Draw launch direction indicator (from projectile to fork for visual reference)
+		var fork_local: Vector2 = to_local(drag_start_pos)
+		draw_line(projectile_pos, fork_local, Color(1.0, 1.0, 0.0, 0.5), 2.0)
+
 	# Draw projectile sitting in fork (unless being dragged)
 	if not is_dragging:
 		draw_circle(projectile_spawn_offset, 10.0, Color.DARK_SLATE_GRAY)
