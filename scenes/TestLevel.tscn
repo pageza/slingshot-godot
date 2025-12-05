@@ -50,22 +50,22 @@ script = ExtResource("3_block")
 block_color = Color(0.824, 0.706, 0.549, 1)
 
 [node name="Block3" type="RigidBody2D" parent="BlockStructure"]
-position = Vector2(-60, -60)
+position = Vector2(-60, -50)
 script = ExtResource("3_block")
 block_color = Color(0.8, 0.6, 0.4, 1)
 
 [node name="Block4" type="RigidBody2D" parent="BlockStructure"]
-position = Vector2(60, -60)
+position = Vector2(60, -50)
 script = ExtResource("3_block")
 block_color = Color(0.8, 0.6, 0.4, 1)
 
 [node name="Block5" type="RigidBody2D" parent="BlockStructure"]
-position = Vector2(0, -120)
+position = Vector2(0, -100)
 script = ExtResource("3_block")
 block_color = Color(0.7, 0.5, 0.3, 1)
 
 [node name="Target1" type="RigidBody2D" parent="BlockStructure"]
-position = Vector2(0, -190)
+position = Vector2(0, -155)
 script = ExtResource("4_target")
 
 [node name="BlockStructure2" type="Node2D" parent="."]
@@ -78,13 +78,13 @@ block_size = Vector2(40, 80)
 block_color = Color(0.6, 0.5, 0.4, 1)
 
 [node name="Block7" type="RigidBody2D" parent="BlockStructure2"]
-position = Vector2(0, -90)
+position = Vector2(0, -80)
 script = ExtResource("3_block")
 block_size = Vector2(40, 80)
 block_color = Color(0.6, 0.5, 0.4, 1)
 
 [node name="Target2" type="RigidBody2D" parent="BlockStructure2"]
-position = Vector2(0, -180)
+position = Vector2(0, -145)
 script = ExtResource("4_target")
 target_size = Vector2(35, 50)
 
