@@ -28,7 +28,7 @@ signal target_destroyed(target: Target)
 func _ready() -> void:
 	current_health = max_health
 
-	# Add to targets group for identification
+	# Add to targets group for identification and gravity management
 	add_to_group("targets")
 
 	# Configure physics properties
@@ -44,21 +44,16 @@ func _ready() -> void:
 	# Create visual and collision
 	create_target_visual()
 
-	# Start with NO GRAVITY - targets placed in position first
+	# Start with NO GRAVITY - stays off until first shot
 	gravity_scale = 0.0
-
-	# Turn on gravity after scene is fully loaded
-	call_deferred("enable_gravity")
 
 	print("Target created with health: ", max_health)
 
 func enable_gravity() -> void:
-	"""Enable gravity after all targets are positioned"""
-	# Wait longer for all objects to spawn and be positioned
-	await get_tree().create_timer(0.5).timeout
-
-	# Now turn on gravity
+	"""Enable gravity when first shot is fired"""
 	gravity_scale = 1.0
+	# Set to sleeping so targets don't move until hit
+	sleeping = true
 
 func create_target_visual() -> void:
 	"""Create visual representation and collision shape"""

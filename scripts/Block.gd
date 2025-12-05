@@ -28,6 +28,9 @@ var initialization_complete: bool = false
 func _ready() -> void:
 	current_health = max_health
 
+	# Add to blocks group for gravity management
+	add_to_group("blocks")
+
 	# Configure physics properties
 	mass = block_mass
 	physics_material_override = PhysicsMaterial.new()
@@ -41,22 +44,17 @@ func _ready() -> void:
 	# Create visual and collision
 	create_block_visual()
 
-	# Start with NO GRAVITY - blocks placed in position first
+	# Start with NO GRAVITY - stays off until first shot
 	gravity_scale = 0.0
-
-	# Turn on gravity after scene is fully loaded
-	call_deferred("enable_gravity")
+	initialization_complete = true
 
 	print("Block created with health: ", max_health)
 
 func enable_gravity() -> void:
-	"""Enable gravity after all blocks are positioned"""
-	# Wait longer for all objects to spawn and be positioned
-	await get_tree().create_timer(0.5).timeout
-
-	# Now turn on gravity
+	"""Enable gravity when first shot is fired"""
 	gravity_scale = 1.0
-	initialization_complete = true
+	# Set to sleeping so blocks don't move until hit
+	sleeping = true
 
 func create_block_visual() -> void:
 	"""Create visual representation and collision shape"""

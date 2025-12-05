@@ -55,6 +55,10 @@ func _on_projectile_launched() -> void:
 	if game_over:
 		return
 
+	# Enable gravity on first shot (blocks stay sleeping until hit)
+	if shots_remaining == total_shots:  # First shot
+		enable_gravity_for_all_blocks()
+
 	shots_remaining -= 1
 	print("Shot fired! Remaining: ", shots_remaining, "/", total_shots)
 	if has_node("/root/Logger"):
@@ -111,6 +115,20 @@ func show_defeat() -> void:
 func can_shoot() -> bool:
 	"""Check if player can still shoot"""
 	return shots_remaining > 0 and not game_over
+
+func enable_gravity_for_all_blocks() -> void:
+	"""Enable gravity for all blocks and targets when first shot is fired"""
+	print("Enabling gravity for all blocks (sleeping until hit)")
+
+	# Enable gravity for all blocks
+	for block in get_tree().get_nodes_in_group("blocks"):
+		if block.has_method("enable_gravity"):
+			block.enable_gravity()
+
+	# Enable gravity for all targets
+	for target in get_tree().get_nodes_in_group("targets"):
+		if target.has_method("enable_gravity"):
+			target.enable_gravity()
 
 func restart_level() -> void:
 	"""Restart the current level"""
