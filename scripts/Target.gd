@@ -46,6 +46,7 @@ func _ready() -> void:
 
 	# Freeze targets completely during initialization to prevent any movement
 	freeze = true
+	freeze_mode = FREEZE_MODE_STATIC  # Completely disable physics simulation
 
 	# Unfreeze after scene is fully loaded
 	call_deferred("complete_initialization")
@@ -54,10 +55,11 @@ func _ready() -> void:
 
 func complete_initialization() -> void:
 	"""Complete initialization after scene is loaded"""
-	# Wait for physics to fully settle
-	await get_tree().create_timer(0.5).timeout
+	# Wait longer for all blocks to spawn and scene to stabilize
+	await get_tree().create_timer(1.0).timeout
 
 	# Now enable physics
+	freeze_mode = FREEZE_MODE_KINEMATIC  # Allow physics but controlled
 	freeze = false
 
 func create_target_visual() -> void:

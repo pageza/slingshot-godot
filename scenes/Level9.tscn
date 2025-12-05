@@ -1,0 +1,261 @@
+[gd_scene load_steps=8 format=3 uid="uid://level9_001"]
+
+[ext_resource type="Script" path="res://scripts/Slingshot.gd" id="1_slingshot"]
+[ext_resource type="PackedScene" uid="uid://c8qkv3r0ybh4j" path="res://scenes/Projectile.tscn" id="2_projectile"]
+[ext_resource type="Script" path="res://scripts/Block.gd" id="3_block"]
+[ext_resource type="Script" path="res://scripts/Target.gd" id="4_target"]
+[ext_resource type="Script" path="res://scripts/GameManager.gd" id="5_gamemanager"]
+[ext_resource type="Script" path="res://scripts/HUD.gd" id="6_hud"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ground"]
+size = Vector2(2000, 100)
+
+[node name="Level9" type="Node2D"]
+
+[node name="GameManager" type="Node" parent="."]
+script = ExtResource("5_gamemanager")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(960, 540)
+zoom = Vector2(1, 1)
+
+[node name="Ground" type="StaticBody2D" parent="."]
+position = Vector2(960, 1000)
+collision_layer = 4
+collision_mask = 0
+
+[node name="GroundShape" type="CollisionShape2D" parent="Ground"]
+shape = SubResource("RectangleShape2D_ground")
+
+[node name="GroundVisual" type="Polygon2D" parent="Ground"]
+color = Color(0.4, 0.3, 0.2, 1)
+polygon = PackedVector2Array(-1000, -50, 1000, -50, 1000, 50, -1000, 50)
+
+[node name="Slingshot" type="Node2D" parent="."]
+position = Vector2(300, 850)
+script = ExtResource("1_slingshot")
+projectile_scene = ExtResource("2_projectile")
+
+[node name="FortressStructure" type="Node2D" parent="."]
+position = Vector2(1200, 850)
+
+[node name="Block1" type="RigidBody2D" parent="FortressStructure"]
+position = Vector2(-100, 0)
+script = ExtResource("3_block")
+block_size = Vector2(40, 80)
+block_color = Color(0.7, 0.6, 0.5, 1)
+
+[node name="Block2" type="RigidBody2D" parent="FortressStructure"]
+position = Vector2(-100, -80)
+script = ExtResource("3_block")
+block_size = Vector2(40, 80)
+block_color = Color(0.7, 0.6, 0.5, 1)
+
+[node name="Block3" type="RigidBody2D" parent="FortressStructure"]
+position = Vector2(-100, -160)
+script = ExtResource("3_block")
+block_size = Vector2(40, 80)
+block_color = Color(0.7, 0.6, 0.5, 1)
+
+[node name="Block4" type="RigidBody2D" parent="FortressStructure"]
+position = Vector2(100, 0)
+script = ExtResource("3_block")
+block_size = Vector2(40, 80)
+block_color = Color(0.7, 0.6, 0.5, 1)
+
+[node name="Block5" type="RigidBody2D" parent="FortressStructure"]
+position = Vector2(100, -80)
+script = ExtResource("3_block")
+block_size = Vector2(40, 80)
+block_color = Color(0.7, 0.6, 0.5, 1)
+
+[node name="Block6" type="RigidBody2D" parent="FortressStructure"]
+position = Vector2(100, -160)
+script = ExtResource("3_block")
+block_size = Vector2(40, 80)
+block_color = Color(0.7, 0.6, 0.5, 1)
+
+[node name="Block7" type="RigidBody2D" parent="FortressStructure"]
+position = Vector2(-80, -240)
+script = ExtResource("3_block")
+block_color = Color(0.824, 0.706, 0.549, 1)
+
+[node name="Block8" type="RigidBody2D" parent="FortressStructure"]
+position = Vector2(-60, -240)
+script = ExtResource("3_block")
+block_color = Color(0.824, 0.706, 0.549, 1)
+
+[node name="Block9" type="RigidBody2D" parent="FortressStructure"]
+position = Vector2(-40, -240)
+script = ExtResource("3_block")
+block_color = Color(0.824, 0.706, 0.549, 1)
+
+[node name="Block10" type="RigidBody2D" parent="FortressStructure"]
+position = Vector2(-20, -240)
+script = ExtResource("3_block")
+block_color = Color(0.824, 0.706, 0.549, 1)
+
+[node name="Block11" type="RigidBody2D" parent="FortressStructure"]
+position = Vector2(20, -240)
+script = ExtResource("3_block")
+block_color = Color(0.824, 0.706, 0.549, 1)
+
+[node name="Block12" type="RigidBody2D" parent="FortressStructure"]
+position = Vector2(40, -240)
+script = ExtResource("3_block")
+block_color = Color(0.824, 0.706, 0.549, 1)
+
+[node name="Block13" type="RigidBody2D" parent="FortressStructure"]
+position = Vector2(60, -240)
+script = ExtResource("3_block")
+block_color = Color(0.824, 0.706, 0.549, 1)
+
+[node name="Block14" type="RigidBody2D" parent="FortressStructure"]
+position = Vector2(80, -240)
+script = ExtResource("3_block")
+block_color = Color(0.824, 0.706, 0.549, 1)
+
+[node name="Block15" type="RigidBody2D" parent="FortressStructure"]
+position = Vector2(-60, 0)
+script = ExtResource("3_block")
+block_color = Color(0.75, 0.65, 0.5, 1)
+
+[node name="Block16" type="RigidBody2D" parent="FortressStructure"]
+position = Vector2(-40, 0)
+script = ExtResource("3_block")
+block_color = Color(0.75, 0.65, 0.5, 1)
+
+[node name="Block17" type="RigidBody2D" parent="FortressStructure"]
+position = Vector2(-20, 0)
+script = ExtResource("3_block")
+block_color = Color(0.75, 0.65, 0.5, 1)
+
+[node name="Block18" type="RigidBody2D" parent="FortressStructure"]
+position = Vector2(20, 0)
+script = ExtResource("3_block")
+block_color = Color(0.75, 0.65, 0.5, 1)
+
+[node name="Block19" type="RigidBody2D" parent="FortressStructure"]
+position = Vector2(40, 0)
+script = ExtResource("3_block")
+block_color = Color(0.75, 0.65, 0.5, 1)
+
+[node name="Block20" type="RigidBody2D" parent="FortressStructure"]
+position = Vector2(60, 0)
+script = ExtResource("3_block")
+block_color = Color(0.75, 0.65, 0.5, 1)
+
+[node name="Block21" type="RigidBody2D" parent="FortressStructure"]
+position = Vector2(-40, -50)
+script = ExtResource("3_block")
+block_color = Color(0.8, 0.6, 0.4, 1)
+
+[node name="Block22" type="RigidBody2D" parent="FortressStructure"]
+position = Vector2(-20, -50)
+script = ExtResource("3_block")
+block_color = Color(0.8, 0.6, 0.4, 1)
+
+[node name="Block23" type="RigidBody2D" parent="FortressStructure"]
+position = Vector2(20, -50)
+script = ExtResource("3_block")
+block_color = Color(0.8, 0.6, 0.4, 1)
+
+[node name="Block24" type="RigidBody2D" parent="FortressStructure"]
+position = Vector2(40, -50)
+script = ExtResource("3_block")
+block_color = Color(0.8, 0.6, 0.4, 1)
+
+[node name="Target1" type="RigidBody2D" parent="FortressStructure"]
+position = Vector2(-60, -105)
+script = ExtResource("4_target")
+target_size = Vector2(30, 45)
+
+[node name="Target2" type="RigidBody2D" parent="FortressStructure"]
+position = Vector2(0, -105)
+script = ExtResource("4_target")
+target_size = Vector2(30, 45)
+
+[node name="Target3" type="RigidBody2D" parent="FortressStructure"]
+position = Vector2(60, -105)
+script = ExtResource("4_target")
+target_size = Vector2(30, 45)
+
+[node name="Block25" type="RigidBody2D" parent="FortressStructure"]
+position = Vector2(-60, -160)
+script = ExtResource("3_block")
+block_color = Color(0.7, 0.55, 0.35, 1)
+
+[node name="Block26" type="RigidBody2D" parent="FortressStructure"]
+position = Vector2(-40, -160)
+script = ExtResource("3_block")
+block_color = Color(0.7, 0.55, 0.35, 1)
+
+[node name="Block27" type="RigidBody2D" parent="FortressStructure"]
+position = Vector2(40, -160)
+script = ExtResource("3_block")
+block_color = Color(0.7, 0.55, 0.35, 1)
+
+[node name="Block28" type="RigidBody2D" parent="FortressStructure"]
+position = Vector2(60, -160)
+script = ExtResource("3_block")
+block_color = Color(0.7, 0.55, 0.35, 1)
+
+[node name="UI" type="CanvasLayer" parent="."]
+script = ExtResource("6_hud")
+
+[node name="ShotsLabel" type="Label" parent="UI"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -200.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 70.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 32
+text = "Shots: 6/6"
+horizontal_alignment = 2
+
+[node name="InfoLabel" type="Label" parent="UI"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -100.0
+offset_right = 400.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 48
+text = "VICTORY!
+
+All targets destroyed!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RestartButton" type="Button" parent="UI"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = 80.0
+offset_right = 100.0
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 32
+text = "RESTART"
